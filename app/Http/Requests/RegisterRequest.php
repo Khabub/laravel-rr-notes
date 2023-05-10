@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
 
     public function getData(){
         $data = $this->validated();
-        $data['password'] = Hash::make($data['password']);
+        $data['password'] = Hash::make($data['password']);        
         return $data;
     }
 }

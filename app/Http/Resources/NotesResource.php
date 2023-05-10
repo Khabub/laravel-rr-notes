@@ -19,7 +19,8 @@ class NotesResource extends JsonResource
                 'id' => $this->id,                
                 'title' => $this->title,
                 'note' => $this->note,
-                'importance' => $this->importance
+                'importance' => $this->importance,
+                'created_at' => $this->created_at
             ];
     }
 }

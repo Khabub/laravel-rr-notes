@@ -17,8 +17,7 @@ use App\Http\Controllers\Api\NotesController;
 */
 
 
-Route::apiResource('/notes', NotesController::class);
-
+Route::middleware('auth:sanctum')->apiResource('/notes', NotesController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

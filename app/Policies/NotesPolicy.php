@@ -19,9 +19,9 @@ class NotesPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Notes $notes): bool
+    public function view(User $user, Notes $note): bool
     {
-        return $user->id === $notes->user_id;
+        return $user->id === $note->user_id;
     }
 
     /**
@@ -35,17 +35,17 @@ class NotesPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Notes $notes): bool
+    public function update(User $user, Notes $note): bool
     {
-        return $user->id === $notes->user_id;
+        return $user->id === $note->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Notes $notes): bool
+    public function delete(User $user, Notes $note): bool
     {
-        return $user->id === $notes->user_id;
+        return $user->id === $note->user_id;
     }
 
     /**

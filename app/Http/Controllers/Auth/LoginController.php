@@ -20,12 +20,20 @@ class LoginController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)){
             throw ValidationException::withMessages([
-                'email' => ['The credentials you entered are incorrect']
+                'name' => ['The credentials you entered are incorrect']
             ]);
-        } */
+        }
+
+        return response()->json([
+            'user' => $user,
+            'token' => $user->createToken('laravel_api_token')->plainTextToken
+        ]); */
 
 
-        // aby šlo get /auth/user, tím nahoře to nešlo
+
+
+        // použít při api-web
+            
         if (!auth()->attempt($request->only(['name', 'password']))) {
             throw ValidationException::withMessages([
                 'email' => ['The credentials you entered are incorrect']

@@ -13,6 +13,14 @@ class RegisterController extends Controller
      */
     public function __invoke(RegisterRequest $request)
     {
-        User::create($request->getData());
+        /* $user = User::create($request->getData());
+
+        return response()->json([
+            'user' => $user,
+            'token' => $user->createToken('laravel_api_token')->plainTextToken
+        ]); */
+
+
+        User::create($request->getData());  // použít při api-web
     }
 }
