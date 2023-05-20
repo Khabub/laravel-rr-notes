@@ -17,9 +17,9 @@ use App\Http\Controllers\Auth\RegisterController;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', LoginController::class)->middleware('guest');
