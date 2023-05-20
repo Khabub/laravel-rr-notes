@@ -18,12 +18,16 @@ class NotesFactory extends Factory
     public function definition(): array
     {
         $note = fake()->realText(100);
-        // $encryptedNote = Crypt::encryptString($note);
+        $encryptedNote = Crypt::encryptString($note);
+
+        $title = fake()->sentence(1);
+        $encryptedTitle = Crypt::encryptString($title);
 
         return [            
-            'title' => fake()->sentence(1),
-           // 'note' => fake()->realText(100),
-            'note' => fake()->sentence(6),
+            // 'title' => fake()->sentence(1),
+            'title' => $encryptedTitle,
+            //'note' => fake()->realText(100),
+            'note' => $encryptedNote,
             'importance' => rand(1, 3),
         ];
     }

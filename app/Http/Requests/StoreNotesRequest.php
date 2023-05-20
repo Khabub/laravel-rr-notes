@@ -24,7 +24,7 @@ class StoreNotesRequest extends FormRequest
         return [
             'title' => 'required|string|max:50',
             'note' => 'required|string|max:555',
-            'importance' => 'required|string|max:1'
+            'importance' => 'required|string|max:5'
         ];
     }
 }

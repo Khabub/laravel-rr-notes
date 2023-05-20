@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('note')->nullable();
-            $table->integer('importance')->nullable();
+            $table->char('importance', 1)->nullable();
             $table->timestamps();
         });
     }
