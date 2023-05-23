@@ -24,13 +24,6 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::middleware('auth:sanctum')->apiResource('/notes', NotesController::class);
 
 
-Route::prefix('auth')->group(function () {
-    Route::post('/login', LoginController::class);
-    Route::post('/logout', LogoutController::class)->middleware('auth:sanctum');
-    Route::post('/register', RegisterController::class)->middleware('guest');
-});
-
-
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

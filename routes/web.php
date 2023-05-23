@@ -21,8 +21,8 @@ use App\Http\Controllers\Auth\RegisterController;
     return view('welcome');
 }); */
 
-/* Route::prefix('auth')->group(function () {
+Route::prefix('auth')->group(function () {
     Route::post('/login', LoginController::class);
     Route::post('/logout', LogoutController::class)->middleware('auth:sanctum');
     Route::post('/register', RegisterController::class)->middleware('guest');
-}); */
+});
