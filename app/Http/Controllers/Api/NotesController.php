@@ -20,13 +20,13 @@ class NotesController extends Controller
         $notes = auth()->user()->notes()->get();
 
         // Decrypt the notes
-        $decryptedNotes = $notes->map(function ($note) {
+        /* $decryptedNotes = $notes->map(function ($note) {
             $note->note = Crypt::decryptString($note->note);
             $note->title = Crypt::decryptString($note->title);
             return $note;
-        });
+        }); */
 
-        return NotesResource::collection($decryptedNotes);
+        return NotesResource::collection($notes);
 
         // $decrypted = Crypt::decryptString($decryptedNotes);
         // return NotesResource::collection(auth()->user()->notes()->get());
@@ -37,17 +37,20 @@ class NotesController extends Controller
      */
     public function store(StoreNotesRequest $request)
     {
-        $validatedData = $request->validated();
+        // Encrypt the note
+        /* $validatedData = $request->validated();
 
         $note = $request->user()->notes()->create([
             'title' => Crypt::encryptString($validatedData['title']),
             'note' => Crypt::encryptString($validatedData['note']),
             'importance' => $validatedData['importance'],
-        ]);
+        ]); */
 
         /* $request->user()->fill([
         'token' => Crypt::encryptString($request->token),
         ])->save(); */
+
+        $note = Notes::create($request->validated());
 
         return NotesResource::make($note);
     }
@@ -65,13 +68,16 @@ class NotesController extends Controller
      */
     public function update(UpdateNotesRequest $request, Notes $note)
     {
-        $validatedData = $request->validated();
+
+        /* $validatedData = $request->validated();
 
         $note->fill([
             'title' => Crypt::encryptString($validatedData['title']),
             'note' => Crypt::encryptString($validatedData['note']),
             'importance' => $validatedData['importance'],
-        ])->save();
+        ])->save(); */
+
+        $note->update($request->validated());
 
         return NotesResource::make($note);
     }
