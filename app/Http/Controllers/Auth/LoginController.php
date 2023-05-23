@@ -16,6 +16,17 @@ class LoginController extends Controller
      */
     public function __invoke(LoginRequest $request)
     {
+        // Verify CSRF token
+        $expectedToken = $request->session()->token(); // Retrieve the stored CSRF token value
+
+        $receivedToken = $request->input('_token'); // Retrieve the CSRF token from the request payload
+
+        if ($expectedToken !== $receivedToken) {
+            throw ValidationException::withMessages([
+                '_token' => ['CSRF token mismatch. Nesouhlasí.'],
+            ]);
+        }
+
         /* $user = User::where('name', $request->name)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)){
@@ -33,7 +44,7 @@ class LoginController extends Controller
 
 
         // použít při api-web
-            
+
         if (!auth()->attempt($request->only(['name', 'password']))) {
             throw ValidationException::withMessages([
                 'input' => ['The credentials you entered are incorrect'],
