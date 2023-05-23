@@ -27,7 +27,7 @@ class LoginController extends Controller
             ]);
         } */
 
-        $user = User::where('name', $request->name)->first();
+        /* $user = User::where('name', $request->name)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)){
             throw ValidationException::withMessages([
@@ -39,18 +39,18 @@ class LoginController extends Controller
         return response()->json([
             'user' => $user,
             'token' => $user->createToken('laravel_api_token')->plainTextToken
-        ]);
+        ]); */
 
 
 
 
         // použít při api-web
 
-        /* if (!auth()->attempt($request->only(['name', 'password']))) {
+        if (!auth()->attempt($request->only(['name', 'password']))) {
             throw ValidationException::withMessages([
                 'input' => ['The credentials you entered are incorrect'],
                 'inputCze' => ['Zadané přihlašovací údaje jsou nesprávné']
             ]);
-        } */
+        }
     }
 }
