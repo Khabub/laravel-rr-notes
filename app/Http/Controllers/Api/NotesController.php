@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Note;
 use App\Models\User;
-use App\Http\Requests\StoreNotesRequest;
-use App\Http\Requests\UpdateNotesRequest;
+use App\Http\Requests\StoreNoteRequest;
+use App\Http\Requests\UpdateNoteRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\NotesResource;
+use App\Http\Resources\NoteResource;
 use Illuminate\Support\Facades\Crypt;
 
-class NotesController extends Controller
+class NoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Note::class);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +31,7 @@ class NotesController extends Controller
             return $note;
         }); */
 
-        return NotesResource::collection($note);
+        return NoteResource::collection($note);
 
         // $decrypted = Crypt::decryptString($decryptedNotes);
         // return NotesResource::collection(auth()->user()->notes()->get());
@@ -36,7 +40,7 @@ class NotesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreNotesRequest $request)
+    public function store(StoreNoteRequest $request)
     {
         // Encrypt the note
         /* $validatedData = $request->validated();
@@ -51,9 +55,9 @@ class NotesController extends Controller
         'token' => Crypt::encryptString($request->token),
         ])->save(); */
 
-        $note = Note::create($request->validated());
+        $note = $request->user()->tasks()->create($request->validated());
 
-        return NotesResource::make($note);
+        return NoteResource::make($note);
     }
 
     /**
@@ -61,13 +65,13 @@ class NotesController extends Controller
      */
     public function show(Note $note)
     {
-        return NotesResource::make($note);  // stejný jako new NotesResource($note)
+        return NoteResource::make($note);  // stejný jako new NotesResource($note)
     }  
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNotesRequest $request, Note $note)
+    public function update(UpdateNoteRequest $request, Note $note)
     {
 
         /* $validatedData = $request->validated();
@@ -80,7 +84,7 @@ class NotesController extends Controller
 
         $note->update($request->validated());
 
-        return NotesResource::make($note);
+        return NoteResource::make($note);
     }
 
     /**
