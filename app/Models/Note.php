@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 
-class Notes extends Model
+class Note extends Model
 {
     use HasFactory;    
 

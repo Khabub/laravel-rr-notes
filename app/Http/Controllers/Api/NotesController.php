@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Notes;
+use App\Models\Note;
+use App\Models\User;
 use App\Http\Requests\StoreNotesRequest;
 use App\Http\Requests\UpdateNotesRequest;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,7 @@ class NotesController extends Controller
     public function index()
     {
         // ignorovat warning, app funguje jak má, jen VSCode nepozná, že notes() existuje
-        $notes = auth()->user()->notes()->get();
+        $note = auth()->user()->notes()->get();
 
         // Decrypt the notes
         /* $decryptedNotes = $notes->map(function ($note) {
@@ -26,7 +27,7 @@ class NotesController extends Controller
             return $note;
         }); */
 
-        return NotesResource::collection($notes);
+        return NotesResource::collection($note);
 
         // $decrypted = Crypt::decryptString($decryptedNotes);
         // return NotesResource::collection(auth()->user()->notes()->get());
@@ -50,7 +51,7 @@ class NotesController extends Controller
         'token' => Crypt::encryptString($request->token),
         ])->save(); */
 
-        $note = Notes::create($request->validated());
+        $note = Note::create($request->validated());
 
         return NotesResource::make($note);
     }
@@ -58,7 +59,7 @@ class NotesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Notes $note)
+    public function show(Note $note)
     {
         return NotesResource::make($note);  // stejný jako new NotesResource($note)
     }  
@@ -66,7 +67,7 @@ class NotesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNotesRequest $request, Notes $note)
+    public function update(UpdateNotesRequest $request, Note $note)
     {
 
         /* $validatedData = $request->validated();
@@ -85,7 +86,7 @@ class NotesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Notes $note)
+    public function destroy(Note $note)
     {
         $note->delete();
 
