@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notes>
  */
-class NotesFactory extends Factory
+class NoteFactory extends Factory
 {
     /**
      * Define the model's default state.
