@@ -12,17 +12,17 @@ use Illuminate\Support\Facades\Crypt;
 
 class NoteController extends Controller
 {
-    public function __construct()
+    /* public function __construct()
     {
         $this->authorizeResource(Note::class);
-    }
+    } */
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         // ignorovat warning, app funguje jak má, jen VSCode nepozná, že notes() existuje
-        $note = auth()->user()->notes()->get();
+        //$note = auth()->user()->notes()->get();
 
         // Decrypt the notes
         /* $decryptedNotes = $notes->map(function ($note) {
@@ -31,7 +31,7 @@ class NoteController extends Controller
             return $note;
         }); */
 
-        return NoteResource::collection($note);
+        return NoteResource::collection(auth()->user()->notes()->get());
 
         // $decrypted = Crypt::decryptString($decryptedNotes);
         // return NotesResource::collection(auth()->user()->notes()->get());
@@ -55,7 +55,7 @@ class NoteController extends Controller
         'token' => Crypt::encryptString($request->token),
         ])->save(); */
 
-        $note = $request->user()->tasks()->create($request->validated());
+        $note = $request->user()->notes()->create($request->validated());
 
         return NoteResource::make($note);
     }
