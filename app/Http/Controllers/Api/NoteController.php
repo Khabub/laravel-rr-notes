@@ -17,21 +17,22 @@ class NoteController extends Controller
         $this->authorizeResource(Note::class);
     } */
     /**
+     * 
      * Display a listing of the resource.
      */
     public function index()
     {
         // ignorovat warning, app funguje jak má, jen VSCode nepozná, že notes() existuje
-        //$note = auth()->user()->notes()->get();
+        $notes = auth()->user()->notes()->get();
 
         // Decrypt the notes
-        /* $decryptedNotes = $notes->map(function ($note) {
+        $decryptedNotes = $notes->map(function ($note) {
             $note->note = Crypt::decryptString($note->note);
             $note->title = Crypt::decryptString($note->title);
             return $note;
-        }); */
+        });
 
-        return NoteResource::collection(auth()->user()->notes()->get());
+        return NoteResource::collection($decryptedNotes);
 
         // $decrypted = Crypt::decryptString($decryptedNotes);
         // return NotesResource::collection(auth()->user()->notes()->get());
@@ -43,19 +44,19 @@ class NoteController extends Controller
     public function store(StoreNoteRequest $request)
     {
         // Encrypt the note
-        /* $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
         $note = $request->user()->notes()->create([
             'title' => Crypt::encryptString($validatedData['title']),
             'note' => Crypt::encryptString($validatedData['note']),
             'importance' => $validatedData['importance'],
-        ]); */
+        ]);
 
         /* $request->user()->fill([
         'token' => Crypt::encryptString($request->token),
         ])->save(); */
 
-        $note = $request->user()->notes()->create($request->validated());
+        // $note = $request->user()->notes()->create($request->validated());
 
         return NoteResource::make($note);
     }
@@ -74,15 +75,15 @@ class NoteController extends Controller
     public function update(UpdateNoteRequest $request, Note $note)
     {
 
-        /* $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
         $note->fill([
             'title' => Crypt::encryptString($validatedData['title']),
             'note' => Crypt::encryptString($validatedData['note']),
             'importance' => $validatedData['importance'],
-        ])->save(); */
+        ])->save();
 
-        $note->update($request->validated());
+        // $note->update($request->validated());
 
         return NoteResource::make($note);
     }
