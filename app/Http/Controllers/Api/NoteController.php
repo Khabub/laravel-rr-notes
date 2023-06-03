@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Note;
-use App\Models\User;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Http\Controllers\Controller;
@@ -52,6 +51,9 @@ class NoteController extends Controller
             'importance' => $validatedData['importance'],
         ]);
 
+        $note->title = $validatedData['title'];
+        $note->note = $validatedData['note'];
+
         /* $request->user()->fill([
         'token' => Crypt::encryptString($request->token),
         ])->save(); */
@@ -67,7 +69,7 @@ class NoteController extends Controller
     public function show(Note $note)
     {
         return NoteResource::make($note);  // stejný jako new NotesResource($note)
-    }  
+    }
 
     /**
      * Update the specified resource in storage.
@@ -83,7 +85,9 @@ class NoteController extends Controller
             'importance' => $validatedData['importance'],
         ])->save();
 
-        // $note->update($request->validated());
+        $note->title = $validatedData['title'];
+        $note->note = $validatedData['note'];
+        //$note->update($request->validated());
 
         return NoteResource::make($note);
     }
